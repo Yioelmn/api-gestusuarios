@@ -1,0 +1,12 @@
+# Dependencias locales
+node_modules/
+.pnpm-store/
+
+# Variables de entorno con credenciales secretas
+.env
+
+# Logs de errores de pnpm
+pnpm-debug.log*
+
+# Carpetas del editor
+.vscode/
