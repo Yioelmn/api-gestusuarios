@@ -1,18 +1,32 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+import path from 'path';
 import fs from 'fs';
-import { URL } from 'url';
 
-// se le dice donde esta la key de manera especifica, sin esto no me dejaba inicializar
-const jsonPath = new URL('./firebase-keys.json', import.meta.url);
-const serviceAccount = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+const configPath = process.env.FIREBASE_CONFIG_PATH 
+  ? process.env.FIREBASE_CONFIG_PATH 
+  : path.join(process.cwd(), 'src', 'config', 'firebase-keys.json');
 
-// se inicializa firebase usando la función directa 'cert' que exporta la v14 de Firebase
-initializeApp({
-  credential: cert(serviceAccount)
-});
+let firebaseAuth;
+let firestoreDb;
 
-console.log('Firebase Admin inicializado correctamente en el Backend ✓');
+try {
+  const jsonRaw = fs.readFileSync(configPath, 'utf8');
+  const serviceAccount = JSON.parse(jsonRaw);
 
-// se exportamos el módulo auth llamando directamente a getAuth()
-export const auth = getAuth();
+  initializeApp({
+    credential: cert(serviceAccount)
+  });
+
+  firebaseAuth = getAuth();
+  firestoreDb = getFirestore();
+  
+  console.log(`FIREBASE INICIALIZADO CON EXITO`);
+
+} catch (error) {
+  console.error("ERROR AL INICIALIZAR FIREBASE:", error.message);
+}
+
+export const auth = firebaseAuth;
+export const db = firestoreDb;
