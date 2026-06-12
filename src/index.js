@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { pool } from './config/db.js'; // para ejecutar initDB desde db.js
 
 const app = express();
 const PORT = process.env.PORT || 3001;
