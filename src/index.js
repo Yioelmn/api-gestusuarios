@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { pool } from './config/db.js'; // para ejecutar initDB desde db.js
+import './config/firebase.js'; // para echar a andar firebase
+import usuariosRoutes from './routes/usuarios.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // middleware
 // app.use(cors());
@@ -14,6 +15,9 @@ app.use(express.json()); // para leer lo de front
 app.get('/', (req, res)=>{
     res.json({ message: 'API GESTIUSUARIOS ARRIBA'});
 });
+
+// enlazamos rutas con:
+app.use('/api/usuarios', usuariosRoutes);
 
 app.listen(PORT, () => {
     console.log(`usuarios corriendo en puerto ${PORT}`);

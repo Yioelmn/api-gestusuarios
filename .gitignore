@@ -4,6 +4,7 @@ node_modules/
 
 # Variables de entorno con credenciales secretas
 .env
+src/config/firebase-keys.json
 
 # Logs de errores de pnpm
 pnpm-debug.log*
