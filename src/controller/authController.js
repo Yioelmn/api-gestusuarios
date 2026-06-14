@@ -24,5 +24,31 @@ export const authController = {
             console.error('Error en authController.registrar:', error);
             return res.status(500).json({ error: 'Error al registrar usuarios' });
         }
+    },
+
+    login: async (req, res) => {
+        try {
+            const { correo } = req.body;
+            
+            if (!correo) {
+                return res.status(400).json({ error: 'El correo es requerido' });
+            }
+
+            // simulacion de que el perfil se cargó con éxito usando el correo que viene de Firebase
+            return res.status(200).json({
+                message: 'Sesión sincronizada correctamente',
+                usuario: {
+                    nombre: "Usuario",
+                    apellidos: "Sanos y Salvos",
+                    email: correo,
+                    direccion: "Santiago, Chile"
+                }
+            });
+
+        } catch (error) {
+            console.error('Error en authController.login:', error);
+            return res.status(500).json({ error: 'Error interno en el login del servidor' });
+        }
     }
+
 };
