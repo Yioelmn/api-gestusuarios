@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // middleware
-app.use(cors());
+// app.use(cors());
 app.use(express.json()); // para leer lo de front 
 
 // ruta de prueba namas
